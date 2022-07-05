@@ -6,9 +6,9 @@ const { isValidMail, isValidPassword } = require("../Validator/validateAuthor");
 const createAuthor = async function (req, res) {
   try {
     let savedData = await authorModel.create(req.author);
-    res.status(201).send({ status: true, data: savedData });
+    return res.status(201).send({ status: true, data: savedData });
   } catch (err) {
-    res.status(500).send({ status: false, msg: err.message });
+    return res.status(500).send({ status: false, msg: err.message });
   }
 };
 

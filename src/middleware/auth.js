@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const blogModel = require("../models/blogModel");
 
 // Authentication
@@ -32,6 +33,10 @@ const authorization = async function (req, res, next) {
     let blogId = req.params.blogId;
     let userLoggedIn = req.token.authorId;
 
+    if (!mongoose.Types.ObjectId.isValid(blogId))
+      return res
+        .status(400)
+        .send({ status: false, msg: "Please enter valid blogId" });
     // Blog validation
     let user = await blogModel.findOne({
       _id: blogId,
